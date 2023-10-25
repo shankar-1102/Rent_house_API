@@ -37,8 +37,7 @@ class Api::V1::HousesController < ApplicationController
 
     private 
     def set_house
-        @house = current_user.houses.find(params[:id])
-      
+        @house = current_user.houses.find(params[:id])      
         if @house.nil?
           render json: { error: "House not found" }, status: :not_found
         end

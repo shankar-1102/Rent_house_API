@@ -5,12 +5,15 @@ class Api::V1::CheckoutsController < ApplicationController
 
     def create 
         Stripe.api_key = Rails.configuration.stripe[:secret_key]
-        @customer=Stripe::Customer.create({
-
-        }),
-        @session=Stripe::Checkout::Session.create({
-
+    
+        payment_link=Stripe::PaymentLink.create({
+            line_items: [{
+                price: 'price_1O3OmlSAGfg5TPND5ekkNvLy',
+                quantity: 1,
+            }]
         })
+        url=payment_link.url
+        render json: {url: url}, status: :ok
     end 
 
 end
