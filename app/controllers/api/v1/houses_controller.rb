@@ -1,13 +1,14 @@
 class Api::V1::HousesController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_house ,only: [:show, :update, :destroy]
+    load_and_authorize_resource
+    before_action :set_house ,only: [ :update, :destroy]
 
     def index 
         @houses=House.all 
         render json: @houses, status: :ok 
     end 
     def show 
-        # @house=House.find(params[:id])
+        @house=House.find(params[:id])
         render json: @house ,status: :ok
     end 
     def create 
@@ -37,7 +38,7 @@ class Api::V1::HousesController < ApplicationController
 
     private 
     def set_house
-        @house = current_user.houses.find(params[:id])      
+        @house = current_user.houses.find_by(params[:id])      
         if @house.nil?
           render json: { error: "House not found" }, status: :not_found
         end

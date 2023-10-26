@@ -1,6 +1,6 @@
 class House < ApplicationRecord
   belongs_to :user
-  has_many :feedbacks
+  has_many :feedbacks, dependent: :destroy
 
 
   #validation

@@ -5,10 +5,14 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
 
 
-  has_many :houses 
-  has_many :feedbacks   
+  has_many :houses , dependent: :destroy
+  has_many :feedbacks, dependent: :destroy 
   
   private 
   
-  enum role: {admin:0, owner: 1, user: 2}   
+  enum role: {admin: 0, owner: 1, user: 2} 
+  after_initialize :set_default_role, if: :new_record?  
+  def set_default_role
+    self.role ||= :user
+  end 
 end

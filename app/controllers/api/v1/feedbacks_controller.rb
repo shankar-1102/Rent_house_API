@@ -1,5 +1,6 @@
 class Api::V1::FeedbacksController < ApplicationController
     before_action :authenticate_user!
+    load_and_authorize_resource
     before_action :set_feedback, only: [:create, :update, :destroy]
     def index 
         @feedbacks = Feedback.all

@@ -1,9 +1,10 @@
 class Api::V1::UsersController < ApplicationController
     before_action :authenticate_user!
+    load_and_authorize_resource
     before_action :set_user, only: [:show]
     
     def index 
-        @user = User.all 
+        @users = User.all 
         render json: @users, status: :ok 
     end 
     def show 
@@ -12,7 +13,7 @@ class Api::V1::UsersController < ApplicationController
 
     def update 
         if current_user.update(user_params)
-            render json: current_user, status: :ok 
+            render json: UserSerializer.new(current_user).serializable_hash[:data][:attributes], status: :ok 
         else 
             render json: {data: current_user.errors.full_messages, status: "failed"},status: :unprocessable_entity
         end 
