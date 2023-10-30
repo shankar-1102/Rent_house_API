@@ -4,7 +4,7 @@ class House < ApplicationRecord
 
 
   #validation
-  validates :name ,:location, presence: true 
+  validates :name, :location, :price_for, :available_for, :status, presence: true 
   validates :amount, presence: true, numericality: {greater_than: 0}
   #appling Enum
 

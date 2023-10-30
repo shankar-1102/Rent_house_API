@@ -12,7 +12,8 @@ Rails.application.routes.draw do
     namespace :v1 do 
       resources :houses do 
         resources :feedbacks 
-        resource :checkouts, only: [:create]
+        # resource :checkouts, only: [:create]
+        post '/checkout', to: "checkouts#create"
       end  
       resources :users
     end 
