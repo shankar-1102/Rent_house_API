@@ -4,7 +4,9 @@ class Api::V1::HousesController < ApplicationController
     before_action :set_house ,only: [ :update, :destroy]
 
     def index 
-        @houses=House.all 
+        @q = House.ransack([:q])
+        @house = @q.result(distinct: true)
+        @houses=House.order(:id).page(params[:page]).per(2)
         render json: @houses, status: :ok 
     end 
     def show 

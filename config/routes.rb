@@ -17,7 +17,6 @@ Rails.application.routes.draw do
       end  
       resources :users
     end 
-  end 
-
-
+  end
+  root 'houses#index'
 end
