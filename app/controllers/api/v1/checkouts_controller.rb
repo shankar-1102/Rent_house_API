@@ -9,7 +9,7 @@ class Api::V1::CheckoutsController < ApplicationController
                 price: 'price_1O3OmlSAGfg5TPND5ekkNvLy',
                 quantity: 1,
             }],
-            success_url: root_path
+            # success_url: root_path
         })
         url=payment_link.url
         render json: {url: url}, status: :ok

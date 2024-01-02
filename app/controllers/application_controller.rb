@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::API
   before_action :configure_permitted_parameters, if: :devise_controller?
+  
+  include ExceptionHandling
 
   protected
   
@@ -8,7 +10,7 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit(:account_update, keys: %i[name avatar])
   end
 
-rescue_from CanCan::AccessDenied do |exception|
-  render json: exception 
-end 
+  # rescue_from CanCan::AccessDenied do |exception|
+  #   render json: exception 
+  # end 
 end
