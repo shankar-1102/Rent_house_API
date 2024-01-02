@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  after_create :send_registration_mail
+  
   include Devise::JWT::RevocationStrategies::JTIMatcher
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -14,5 +16,10 @@ class User < ApplicationRecord
   after_initialize :set_default_role, if: :new_record?  
   def set_default_role
     self.role ||= :user
+  end 
+
+  private 
+  def send_registration_mail
+    SendMailsJob.perform_now(self)
   end 
 end
